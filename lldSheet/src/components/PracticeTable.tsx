@@ -1,0 +1,142 @@
+import React from 'react';
+import { PRACTICE } from '../data/pract';
+
+const styles = {
+  mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
+  headerWrapper: 'mb-[18px] flex flex-wrap items-center justify-between gap-[10px]',
+  headerTitle: 'font-display text-[17px] font-semibold tracking-[-0.2px] text-text-main',
+  headerSub: 'mt-[3px] text-xs text-t2',
+  tableWrapper: 'overflow-hidden rounded-[8px] border border-brd bg-s1',
+  table: 'w-full border-collapse text-left',
+  trHead: 'border-b border-brd bg-s2',
+  thBase: 'px-4 py-[11px] text-[11px] font-medium tracking-[0.5px] uppercase text-t3 whitespace-nowrap',
+  trBody: 'border-b border-brd transition-colors hover:bg-s2 last:border-0',
+  tdBase: 'px-4 py-[14px] align-middle',
+  selectInput: 'min-w-[132px] cursor-pointer appearance-none rounded-[5px] border bg-[url(\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%279%27 height=%275%27 viewBox=%270 0 9 5%27%3E%3Cpath d=%27M0 0l4.5 5L9 0z%27 fill=%27%23444%27/%3E%3C/svg%3E\')] bg-[position:right_8px_center] bg-no-repeat px-[10px] py-[6px] pr-[28px] font-sans text-xs font-normal outline-none transition-all',
+  
+  selectStatusColors: {
+    'ns': 'bg-transparent text-t3 border-brd2',
+    'ac': 'bg-adim text-amber-main border-amber-main/20',
+    'dn': 'bg-gdim text-green-main border-green-main/20'
+  },
+  
+  problemWrapper: 'flex items-center gap-[9px]',
+  problemIcon: 'w-[26px] shrink-0 text-[16px] opacity-85',
+  problemName: 'text-[14px] font-medium text-text-main',
+  problemConcepts: 'text-[12px] leading-[1.55] text-t2',
+  
+  diffBadgeBase: 'inline-flex items-center whitespace-nowrap rounded-[4px] border px-[9px] py-[3px] text-[11px] font-medium tracking-[0.2px]',
+  diffBadgeColors: {
+    'Beginner': 'border-green-main/15 bg-gdim text-green2',
+    'Intermediate': 'border-amber-main/15 bg-adim text-amber-main',
+    'Advanced': 'border-red-main/15 bg-rdim text-red-main',
+    'default': 'border-red-main/15 bg-rdim text-red-main'
+  },
+
+  typeBadgeBase: 'inline-flex items-center whitespace-nowrap rounded-[4px] border px-[9px] py-[3px] text-[11px] font-medium tracking-[0.2px]',
+  typeBadgeColors: {
+    'HLD': 'border-blue-main/15 bg-bdim text-blue-main',
+    'LLD': 'border-amber-main/15 bg-adim text-amber-main',
+    'default': 'border-brd2 bg-s3 text-t2'
+  },
+
+  linksWrapper: 'flex flex-wrap items-center gap-[5px]',
+  linkItem: 'inline-flex items-center gap-1 whitespace-nowrap rounded-[4px] border border-blue-main/12 bg-bdim px-[9px] py-[4px] text-[11px] text-blue-main no-underline transition-all hover:border-blue-main/25 hover:bg-blue-main/13'
+};
+
+interface PracticeTableProps {
+  progressMap: Record<string, string>;
+  updateProgress: (id: string, status: string) => void;
+}
+
+export default function PracticeTable({ progressMap, updateProgress }: PracticeTableProps) {
+  return (
+    <div className={styles.mainDiv}>
+      <div className={styles.headerWrapper}>
+        <div>
+          <h2 className={styles.headerTitle}>Practice Problems</h2>
+          <div className={styles.headerSub}>Solve in order — Beginner → Intermediate → Advanced</div>
+        </div>
+      </div>
+
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <thead>
+            <tr className={styles.trHead}>
+              <th className={styles.thBase} style={{ width: '30px' }}>#</th>
+              <th className={styles.thBase} style={{ minWidth: '210px' }}>Problem</th>
+              <th className={styles.thBase}>Type</th>
+              <th className={styles.thBase}>Difficulty</th>
+              <th className={styles.thBase} style={{ minWidth: '130px' }}>Status</th>
+              <th className={styles.thBase}>Key Concepts to Apply</th>
+              <th className={styles.thBase} style={{ minWidth: '220px' }}>Resources</th>
+            </tr>
+          </thead>
+          <tbody>
+            {PRACTICE.map((item, idx) => {
+              const dynamicDiffBadge = (styles.diffBadgeColors as any)[item.diff] || styles.diffBadgeColors.default;
+              const dynamicTypeBadge = (styles.typeBadgeColors as any)[item.t] || styles.typeBadgeColors.default;
+              const statusVal = progressMap[item.id] || 'ns';
+              const dynamicSelectColor = (styles.selectStatusColors as any)[statusVal] || styles.selectStatusColors['ns'];
+
+              return (
+                <tr key={item.id} className={styles.trBody}>
+                  <td className={styles.tdBase}>
+                    <span className="text-[11px] text-t3 font-medium">{idx + 1}</span>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <div className={styles.problemWrapper}>
+                      <div className={styles.problemIcon}>{item.ico}</div>
+                      <div>
+                        <div className={styles.problemName}>{item.name}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <span className={`${styles.typeBadgeBase} ${dynamicTypeBadge}`}>
+                      {item.t}
+                    </span>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <span className={`${styles.diffBadgeBase} ${dynamicDiffBadge}`}>
+                      {item.diff}
+                    </span>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <select 
+                      className={`${styles.selectInput} ${dynamicSelectColor}`}
+                      value={statusVal}
+                      onChange={(e) => updateProgress(item.id, e.target.value)}
+                    >
+                      <option value="ns">Not Started</option>
+                      <option value="ac">Active</option>
+                      <option value="dn">Done</option>
+                    </select>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <div className={styles.problemConcepts}>{item.concepts}</div>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <div className={styles.linksWrapper}>
+                      {item.links.map((lnk, lIdx) => (
+                        <a
+                          key={lIdx}
+                          href={lnk.u}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.linkItem}
+                        >
+                          {lnk.t}
+                        </a>
+                      ))}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
