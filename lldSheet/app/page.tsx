@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Header from '../src/components/Header';
+import TabsNav from '../src/components/TabsNav';
+import Footer from '../src/components/Footer';
 import Roadmap from '../src/components/Roadmap';
 import LldTable from '../src/components/LldTable';
 import HldTable from '../src/components/HldTable';
@@ -42,13 +44,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-bg font-sans text-text-main">
       <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
         cDone={isClient ? doneTasks : 0}
         cActive={isClient ? activeTasks : 0}
         cNS={isClient ? pendingTasks : 0}
       />
       <ProgressBar progress={isClient ? progressPercent : 0} />
+      <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="pb-16">
         {activeTab === 'roadmap' && <Roadmap />}
         {activeTab === 'lld' && (
@@ -78,6 +79,7 @@ export default function Home() {
         {activeTab === 'resources' && <ResourcesTab />}
         {activeTab === 'questions' && <QuestionsTab />}
       </main>
+      <Footer />
     </div>
   );
 }

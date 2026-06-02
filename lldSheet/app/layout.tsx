@@ -2,8 +2,21 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "mySystemDesign",
-  description: "mySystemDesign",
+  title: "mySystemDesign — Beginner to Advanced Architecture Tracker",
+  description: "The ultimate interactive tracker to master Low-Level Design (LLD), High-Level Design (HLD), system architecture, and design patterns. Ace your tech interviews.",
+  keywords: ["System Design", "Low Level Design", "High Level Design", "LLD", "HLD", "Software Architecture", "Design Patterns", "Tech Interview Prep", "FAANG Prep"],
+  authors: [{ name: "Ankit" }],
+  openGraph: {
+    title: "mySystemDesign — Master System Architecture",
+    description: "An interactive tracker to learn High-Level Design, Low-Level Design, and crack your software engineering interviews.",
+    type: "website",
+    siteName: "mySystemDesign",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "mySystemDesign — Master System Architecture",
+    description: "An interactive tracker to learn High-Level Design, Low-Level Design, and crack your software engineering interviews.",
+  },
 };
 
 export default function RootLayout({
