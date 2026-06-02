@@ -1,1 +1,1 @@
-//I will create static page website for keep tracking of lld design questions 
+This project  is used for keep tracking of System design questions and concepts in one place with resources
