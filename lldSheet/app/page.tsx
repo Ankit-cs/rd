@@ -14,51 +14,40 @@ import { LLD_TOPICS } from '../src/data/lld';
 import { HLD_TOPICS } from '../src/data/hld';
 import { PATTERNS } from '../src/data/patterns';
 import { PRACTICE } from '../src/data/pract';
+import { loadProgress, saveProgress, ProgressMap } from '../src/utils/storage';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('roadmap');
-  const [progressMap, setProgressMap] = useState<Record<string, string>>({});
+  const [progressMap, setProgressMap] = useState<ProgressMap>({});
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-    try {
-      const stored = localStorage.getItem('sdt-p');
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        
-        // Migrate old HTML values ('not-started', 'active', 'completed') to new values ('ns', 'ac', 'dn')
-        const migrated: Record<string, string> = {};
-        for(const key in parsed) {
-          let val = parsed[key];
-          if(val === 'not-started') val = 'ns';
-          if(val === 'active') val = 'ac';
-          if(val === 'completed') val = 'dn';
-          migrated[key] = val;
-        }
-        setProgressMap(migrated);
-      }
-    } catch(e) {}
+    setProgressMap(loadProgress());
   }, []);
 
-  const updateProgress = (id: string, status: string) => {
-    setProgressMap(prev => {
-      const next = { ...prev, [id]: status };
-      try {
-        localStorage.setItem('sdt-p', JSON.stringify(next));
-      } catch(e) {}
-      return next;
-    });
+  const updateProgress = (id: string, val: string) => {
+    const newMap = { ...progressMap, [id]: val };
+    setProgressMap(newMap);
+    saveProgress(newMap);
   };
 
   const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS, ...PRACTICE];
   const totalTasks = allTasks.length;
   const doneTasks = allTasks.filter(p => progressMap[p.id] === 'dn').length;
+  const activeTasks = allTasks.filter(p => progressMap[p.id] === 'ac').length;
+  const pendingTasks = totalTasks - doneTasks - activeTasks;
   const progressPercent = totalTasks === 0 ? 0 : Math.round((doneTasks / totalTasks) * 100);
 
   return (
     <div className="min-h-screen bg-bg font-sans text-text-main">
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Header 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        cDone={isClient ? doneTasks : 0}
+        cActive={isClient ? activeTasks : 0}
+        cNS={isClient ? pendingTasks : 0}
+      />
       <ProgressBar progress={isClient ? progressPercent : 0} />
       <main className="pb-16">
         {activeTab === 'roadmap' && <Roadmap />}
