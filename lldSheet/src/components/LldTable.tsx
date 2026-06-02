@@ -41,7 +41,7 @@ const styles = {
   },
   
   tagsWrapper: 'flex flex-wrap gap-[5px]',
-  coTag: 'whitespace-nowrap rounded-[4px] border border-brd2 bg-transparent px-[8px] py-[3px] text-[10px] text-t3',
+  coTag: 'whitespace-nowrap rounded-[4px] border border-brd2 bg-transparent px-[8px] py-[3px] text-[12px] text-t2',
 
   linksWrapper: 'flex flex-wrap items-center gap-[5px]',
   linkItem: 'inline-flex items-center gap-1 whitespace-nowrap rounded-[4px] border border-blue-main/12 bg-bdim px-[9px] py-[4px] text-[11px] text-blue-main no-underline transition-all hover:border-blue-main/25 hover:bg-blue-main/13'
