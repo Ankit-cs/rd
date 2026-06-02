@@ -1,10 +1,10 @@
-# 🌱 mySystemDesign — LLD & Roadmap Edition
+# 🚀 NextGen System Architecture Tracker
 
-> The ultimate, beautifully designed tracker to master Low-Level Design (LLD) and system architecture. Built with modern Next.js and Tailwind CSS.
+> A modern, comprehensive, and interactive curriculum for mastering Software Architecture, High-Level Design (HLD), and Low-Level Design (LLD). Built from the ground up with Next.js 15, Tailwind CSS v4, and TypeScript.
 
 <div align="center">
 
-### 🔗 [Live Demo → mysystemdesign.vercel.app](https://mysystemdesign.vercel.app/)
+### 🔗 [Live Application → mysystemdesign.vercel.app](https://mysystemdesign.vercel.app/)
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css)
@@ -15,82 +15,82 @@
 
 ---
 
-## 🗺️ What's Inside
+## 📖 Overview
 
-This project is a heavily optimized, highly responsive **Next.js** application designed to help you track your progress through the complex world of System Design.
+System design interviews are notoriously difficult to prepare for due to the sheer volume of unstructured information scattered across the internet. **NextGen System Architecture Tracker** solves this by offering a heavily opinionated, highly structured curriculum that tracks your progress completely locally in your browser.
 
-| Feature | What you get |
-|---|---|
-| 🗺️ **Learning Roadmap** | A structured, phase-by-phase learning path covering everything from basic fundamentals to advanced architecture. |
-| ⚙️ **LLD Concepts** | An interactive table of Low-Level Design and Object-Oriented programming problems categorized by difficulty. |
-| 📊 **Live Progress Bar** | Real-time tracking of your progress across all practice problems. |
-| 💾 **Local Persistence** | Your state (`Not Started`, `Active`, `Done`) is saved instantly to your browser's `localStorage`. No database required! |
-| 🎨 **Premium UI** | Custom dark mode aesthetics, smooth Tailwind micro-animations, and perfect typography (`Inter` & `Outfit`). |
+Instead of getting lost in endless tutorials, follow our structured phases, check off topics as you learn them, and review real-world interview questions.
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## 🛠️ The Curriculum Architecture
 
-Since this is built on Next.js, running it locally is incredibly fast and simple.
+This project organizes your learning journey into seven distinct, highly-focused modules.
 
-1. **Install dependencies:**
+### 1. 🗺️ The Learning Roadmap
+A step-by-step path ensuring you don't jump into advanced distributed systems before understanding core networking fundamentals.
+* **Phase 1: Foundations** (Networking, OS concepts, Databases)
+* **Phase 2: Core Architecture** (Load balancing, Caching, Sharding)
+* **Phase 3: Advanced Systems** (Event sourcing, CRDTs, Consensus algorithms)
+
+### 2. ⚙️ Low-Level Design (LLD) & OOP
+Focuses on writing clean, maintainable, and scalable code using Object-Oriented principles.
+* **Core Systems:** Design a Parking Lot, Elevator System, Vending Machine, and ATM.
+* **Games:** Tic-Tac-Toe, Snake & Ladder, Chess.
+* **Complex Applications:** Splitwise (debt simplification algorithms), BookMyShow (concurrency and locking).
+
+### 3. 🏗️ High-Level Design (HLD)
+Focuses on building large-scale, distributed fault-tolerant systems.
+* **Scalability Fundamentals:** Vertical vs. Horizontal scaling, CAP Theorem, PACELC.
+* **Data Management:** Database replication, consistent hashing, database sharding.
+* **Communication:** REST vs gRPC vs GraphQL, message queues (Kafka, RabbitMQ), and Pub/Sub.
+
+### 4. 🧩 Software Design Patterns
+A curated list of the classic Gang of Four (GoF) patterns with modern applications.
+* **Creational:** Singleton, Factory, Builder, Prototype.
+* **Structural:** Adapter, Decorator, Facade, Proxy.
+* **Behavioral:** Strategy, Observer, Command, State.
+
+### 5. 🏋️ Applied Practice Problems
+Test your knowledge by designing clones of massively scalable real-world products.
+* **Social Media:** Twitter (news feed generation), Instagram (photo storage).
+* **Communication:** WhatsApp (real-time chat, end-to-end encryption).
+* **Utilities:** URL Shortener (TinyURL), Pastebin, Rate Limiter.
+* **Streaming:** Netflix, YouTube (CDN distribution, video transcoding).
+
+### 6. 📚 Curated Resource Library
+We’ve sifted through the noise to bring you the highest quality learning materials.
+* **Books:** Designing Data-Intensive Applications (DDIA), Clean Architecture.
+* **System Design Primers:** The famous GitHub repositories and standard community resources.
+* **Video Content:** Hand-picked YouTube channels dedicated to whiteboarding and architecture deep-dives.
+
+### 7. ❓ Real Interview Questions
+A collection of high-frequency questions asked at top-tier tech companies.
+* Includes dynamic difficulty ratings.
+* Features a toggleable "Hint/Approach" system to help you get unstuck without giving away the entire solution immediately.
+
+---
+
+## 💻 Tech Stack & Features
+
+* **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+* **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+* **Language**: [TypeScript](https://www.typescriptlang.org/)
+* **State Management**: Zero-dependency local persistence. Your progress (`Done`, `Active`, `Pending`) is saved securely in your browser's `localStorage`.
+* **UX/UI**: Features a sleek dark mode, real-time search filtering, dynamic header statistic tracking, and micro-interactions.
+
+---
+
+## 🚀 Running Locally
+
+1. **Clone & Install Dependencies:**
    ```bash
    npm install
    ```
 
-2. **Run the development server:**
+2. **Boot the Development Server:**
    ```bash
    npx next dev
    ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## ⚙️ Low-Level Design (LLD) Topics Tracked
-
-The LLD Concepts tab tracks your mastery of these core structural problems, complete with curated links and guides.
-
-### 🌱 Beginner LLD
-| Problem | Key Concepts |
-|---|---|
-| **Tic-Tac-Toe Game** | Board NxN, players, win detection, draw, extensible design |
-| **Logging System** | Singleton logger, log levels, file appender |
-| **Calculator** | Strategy pattern, expression evaluation |
-| **LRU Cache** | HashMap + DLL, O(1) get/put, capacity eviction |
-| **Snake & Ladder** | Board, dice, players, snakes/ladders map, turn management |
-
-### 🚀 Intermediate LLD
-| Problem | Key Concepts |
-|---|---|
-| **Parking Lot** | Singleton, Strategy (pricing), vehicle types, tickets |
-| **Elevator System** | SCAN algorithm, State machine, multi-elevator coordination |
-| **ATM Machine** | State pattern, authentication, cash dispensing |
-| **Vending Machine** | State machine, inventory, change calculation |
-| **Splitwise** | Group expenses, debt simplification with greedy algorithm |
-| **BookMyShow** | Theatre hierarchy, concurrent seat locking, optimistic locking |
-
-### 🧠 Advanced LLD
-| Problem | Key Concepts |
-|---|---|
-| **Chess Game** | Polymorphic pieces, move validation, game state machine |
-| **Thread-Safe LRU Cache** | ReentrantReadWriteLock, ConcurrentHashMap, sharded locks |
-| **Pub-Sub Event Bus** | Observer pattern, topic registry, async dispatch, DLQ |
-
----
-
-## 🛠️ Tech Stack & Architecture
-
-- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (using native `@theme` CSS variables)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **State Management**: React `useState` & `useEffect` synchronized with browser `localStorage`.
-- **Fonts**: Next.js optimized Google Fonts (`Inter` for sans, `Outfit` for display).
-
----
-
-## 🚢 Deployment
-
-This project is perfectly configured to be deployed on **Vercel**. 
-
-*Make sure that when deploying, you set your Vercel project's **Root Directory** to `lldsheet` so Vercel knows where to find the Next.js configuration!*
+3. Open [http://localhost:3000](http://localhost:3000) in your browser. Your progress will be saved automatically as you interact with the UI.
