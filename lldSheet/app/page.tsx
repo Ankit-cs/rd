@@ -4,8 +4,12 @@ import React, { useState, useEffect } from 'react';
 import Header from '../src/components/Header';
 import Roadmap from '../src/components/Roadmap';
 import LldTable from '../src/components/LldTable';
+import HldTable from '../src/components/HldTable';
+import PatternsTable from '../src/components/PatternsTable';
 import ProgressBar from '../src/components/ProgressBar';
-import { PRACTICE } from '../src/data/lld';
+import { LLD_TOPICS } from '../src/data/lld';
+import { HLD_TOPICS } from '../src/data/hld';
+import { PATTERNS } from '../src/data/patterns';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('roadmap');
@@ -43,8 +47,9 @@ export default function Home() {
     });
   };
 
-  const totalTasks = PRACTICE.length;
-  const doneTasks = PRACTICE.filter(p => progressMap[p.id] === 'dn').length;
+  const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS];
+  const totalTasks = allTasks.length;
+  const doneTasks = allTasks.filter(p => progressMap[p.id] === 'dn').length;
   const progressPercent = totalTasks === 0 ? 0 : Math.round((doneTasks / totalTasks) * 100);
 
   return (
@@ -55,6 +60,18 @@ export default function Home() {
         {activeTab === 'roadmap' && <Roadmap />}
         {activeTab === 'lld' && (
           <LldTable 
+            progressMap={progressMap} 
+            updateProgress={updateProgress} 
+          />
+        )}
+        {activeTab === 'hld' && (
+          <HldTable 
+            progressMap={progressMap} 
+            updateProgress={updateProgress} 
+          />
+        )}
+        {activeTab === 'patterns' && (
+          <PatternsTable 
             progressMap={progressMap} 
             updateProgress={updateProgress} 
           />
