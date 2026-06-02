@@ -6,10 +6,13 @@ import Roadmap from '../src/components/Roadmap';
 import LldTable from '../src/components/LldTable';
 import HldTable from '../src/components/HldTable';
 import PatternsTable from '../src/components/PatternsTable';
+import PracticeTable from '../src/components/PracticeTable';
+import ResourcesTab from '../src/components/ResourcesTab';
 import ProgressBar from '../src/components/ProgressBar';
 import { LLD_TOPICS } from '../src/data/lld';
 import { HLD_TOPICS } from '../src/data/hld';
 import { PATTERNS } from '../src/data/patterns';
+import { PRACTICE } from '../src/data/pract';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('roadmap');
@@ -47,7 +50,7 @@ export default function Home() {
     });
   };
 
-  const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS];
+  const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS, ...PRACTICE];
   const totalTasks = allTasks.length;
   const doneTasks = allTasks.filter(p => progressMap[p.id] === 'dn').length;
   const progressPercent = totalTasks === 0 ? 0 : Math.round((doneTasks / totalTasks) * 100);
@@ -76,6 +79,13 @@ export default function Home() {
             updateProgress={updateProgress} 
           />
         )}
+        {activeTab === 'practice' && (
+          <PracticeTable 
+            progressMap={progressMap} 
+            updateProgress={updateProgress} 
+          />
+        )}
+        {activeTab === 'resources' && <ResourcesTab />}
       </main>
     </div>
   );
