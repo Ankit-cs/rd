@@ -18,7 +18,7 @@ export default function Footer() {
         Created with Next.js, Tailwind CSS, and local persistence.
       </div>
       <a 
-        href="https://github.com/Ankit-cs/rd" 
+        href="https://github.com/cs/rd" 
         target="_blank" 
         rel="noopener noreferrer" 
         className={styles.githubBtn}
