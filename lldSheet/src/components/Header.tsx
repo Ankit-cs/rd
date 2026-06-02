@@ -13,10 +13,24 @@ const styles = {
   tabState: {
     active: "bg-gdim text-green-main border border-green-main/30",
     inactive: "text-t2 hover:text-text-main hover:bg-s2 border border-transparent"
-  }
+  },
+  pillsWrapper: "flex items-center gap-[8px]",
+  pill: "flex items-center gap-[6px] rounded-[20px] border border-brd2 bg-s1 px-[14px] py-[5px] text-[12px] text-t2",
+  dot: "h-[7px] w-[7px] shrink-0 rounded-full",
+  dotDg: "bg-green-main",
+  dotDa: "bg-amber-500",
+  dotDr: "bg-red-500"
 };
 
-export default function Header({ activeTab, setActiveTab }: { activeTab: string, setActiveTab: (tab: string) => void }) {
+interface HeaderProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  cDone?: number;
+  cActive?: number;
+  cNS?: number;
+}
+
+export default function Header({ activeTab, setActiveTab, cDone = 0, cActive = 0, cNS = 0 }: HeaderProps) {
   return (
     <div className={styles.headerWrapper}>
       <div className={styles.logoWrapper}>
@@ -72,6 +86,12 @@ export default function Header({ activeTab, setActiveTab }: { activeTab: string,
         >
           Interview Questions
         </button>
+      </div>
+
+      <div className={styles.pillsWrapper}>
+        <div className={styles.pill}><span className={`${styles.dot} ${styles.dotDg}`}></span><span>{cDone}</span>&nbsp;Done</div>
+        <div className={styles.pill}><span className={`${styles.dot} ${styles.dotDa}`}></span><span>{cActive}</span>&nbsp;Active</div>
+        <div className={styles.pill}><span className={`${styles.dot} ${styles.dotDr}`}></span><span>{cNS}</span>&nbsp;Pending</div>
       </div>
     </div>
   );
