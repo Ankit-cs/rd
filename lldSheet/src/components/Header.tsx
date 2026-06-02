@@ -54,6 +54,18 @@ export default function Header({ activeTab, setActiveTab }: { activeTab: string,
         >
           Design Patterns
         </button>
+        <button
+          onClick={() => setActiveTab('practice')}
+          className={`${styles.tabBase} ${activeTab === 'practice' ? styles.tabState.active : styles.tabState.inactive}`}
+        >
+          Practice Problems
+        </button>
+        <button
+          onClick={() => setActiveTab('resources')}
+          className={`${styles.tabBase} ${activeTab === 'resources' ? styles.tabState.active : styles.tabState.inactive}`}
+        >
+          Resource Library
+        </button>
       </div>
     </div>
   );
