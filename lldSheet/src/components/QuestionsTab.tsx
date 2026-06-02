@@ -4,6 +4,12 @@ import { QUESTIONS } from '../data/questions';
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
   headerWrapper: 'mb-[18px] flex flex-wrap items-center justify-between gap-[10px]',
+  
+  fBar: 'flex flex-wrap items-center gap-[6px]',
+  fBtn: 'cursor-pointer rounded-[5px] border border-brd2 bg-transparent px-[13px] py-[6px] font-sans text-[12px] text-t2 transition-all hover:bg-s2 hover:text-text-main',
+  fBtnActive: '!border-green-main/30 !bg-gdim !text-green-main',
+  srch: 'w-[210px] rounded-[5px] border border-brd2 bg-s1 px-[12px] py-[6px] font-sans text-[13px] text-text-main outline-none transition-colors placeholder:text-t3 focus:border-green-main/30',
+
   headerTitle: 'font-display text-[17px] font-semibold tracking-[-0.2px] text-text-main',
   headerSub: 'mt-[3px] text-xs text-t2',
   
@@ -29,6 +35,15 @@ const styles = {
 
 export default function QuestionsTab() {
   const [openHints, setOpenHints] = useState<Record<number, boolean>>({});
+  const [search, setSearch] = useState('');
+  const [typeF, setTypeF] = useState('all');
+
+  const filteredQuestions = QUESTIONS.filter(item => {
+    const searchLower = search.toLowerCase();
+    const matchSearch = item.q.toLowerCase().includes(searchLower) || item.topic.toLowerCase().includes(searchLower);
+    const matchType = typeF === 'all' || item.t.toLowerCase() === typeF.toLowerCase();
+    return matchSearch && matchType;
+  });
 
   const toggleHint = (id: number) => {
     setOpenHints(prev => ({
@@ -44,10 +59,28 @@ export default function QuestionsTab() {
           <h2 className={styles.headerTitle}>Most Asked Interview Questions</h2>
           <div className={styles.headerSub}>Real questions from FAANG + product companies with approach hints</div>
         </div>
+        <div className={styles.fBar}>
+          <input 
+            type="text" 
+            className={styles.srch} 
+            placeholder="🔍 Search..." 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {['all', 'HLD', 'LLD'].map(t => (
+            <button
+              key={t}
+              className={`${styles.fBtn} ${typeF === t ? styles.fBtnActive : ''}`}
+              onClick={() => setTypeF(t)}
+            >
+              {t === 'all' ? 'All' : t}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className={styles.qGrid}>
-        {QUESTIONS.map((q) => (
+        {filteredQuestions.map((q) => (
           <div key={q.id} className={styles.qCard}>
             <div className={styles.qCardTop}>
               <div className={styles.qNum}>
