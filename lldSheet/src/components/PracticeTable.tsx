@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PRACTICE } from '../data/pract';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
   headerWrapper: 'mb-[18px] flex flex-wrap items-center justify-between gap-[10px]',
+  
+  fBar: 'flex flex-wrap items-center gap-[6px]',
+  fBtn: 'cursor-pointer rounded-[5px] border border-brd2 bg-transparent px-[13px] py-[6px] font-sans text-[12px] text-t2 transition-all hover:bg-s2 hover:text-text-main',
+  fBtnActive: '!border-green-main/30 !bg-gdim !text-green-main',
+  srch: 'w-[210px] rounded-[5px] border border-brd2 bg-s1 px-[12px] py-[6px] font-sans text-[13px] text-text-main outline-none transition-colors placeholder:text-t3 focus:border-green-main/30',
+
   headerTitle: 'font-display text-[17px] font-semibold tracking-[-0.2px] text-text-main',
   headerSub: 'mt-[3px] text-xs text-t2',
   tableWrapper: 'overflow-hidden rounded-[8px] border border-brd bg-s1',
@@ -50,12 +56,51 @@ interface PracticeTableProps {
 }
 
 export default function PracticeTable({ progressMap, updateProgress }: PracticeTableProps) {
+  const [search, setSearch] = useState('');
+  const [diffF, setDiffF] = useState('all');
+  const [typeF, setTypeF] = useState('all');
+
+  const filteredPractice = PRACTICE.filter(item => {
+    const searchLower = search.toLowerCase();
+    const matchSearch = item.name.toLowerCase().includes(searchLower) || item.concepts.toLowerCase().includes(searchLower);
+    const matchDiff = diffF === 'all' || item.diff.toLowerCase() === diffF.toLowerCase();
+    const matchType = typeF === 'all' || item.t.toLowerCase() === typeF.toLowerCase();
+    return matchSearch && matchDiff && matchType;
+  });
+
   return (
     <div className={styles.mainDiv}>
       <div className={styles.headerWrapper}>
         <div>
           <h2 className={styles.headerTitle}>Practice Problems</h2>
           <div className={styles.headerSub}>Solve in order — Beginner → Intermediate → Advanced</div>
+        </div>
+        <div className={styles.fBar}>
+          <input 
+            type="text" 
+            className={styles.srch} 
+            placeholder="🔍 Search..." 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {['all', 'Beginner', 'Intermediate', 'Advanced'].map(diff => (
+            <button
+              key={diff}
+              className={`${styles.fBtn} ${diffF === diff ? styles.fBtnActive : ''}`}
+              onClick={() => setDiffF(diff)}
+            >
+              {diff === 'all' ? 'All' : diff}
+            </button>
+          ))}
+          {['all', 'HLD', 'LLD'].map(t => (
+            <button
+              key={t}
+              className={`${styles.fBtn} ${typeF === t ? styles.fBtnActive : ''}`}
+              onClick={() => setTypeF(t)}
+            >
+              {t === 'all' ? 'HLD+LLD' : t}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -73,7 +118,7 @@ export default function PracticeTable({ progressMap, updateProgress }: PracticeT
             </tr>
           </thead>
           <tbody>
-            {PRACTICE.map((item, idx) => {
+            {filteredPractice.map((item, idx) => {
               const dynamicDiffBadge = (styles.diffBadgeColors as any)[item.diff] || styles.diffBadgeColors.default;
               const dynamicTypeBadge = (styles.typeBadgeColors as any)[item.t] || styles.typeBadgeColors.default;
               const statusVal = progressMap[item.id] || 'ns';
