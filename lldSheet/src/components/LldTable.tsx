@@ -1,42 +1,44 @@
 import React from 'react';
-import { PRACTICE } from '../data/lld';
+import { LLD_TOPICS } from '../data/lld';
 
-// --- Tailwind Class Variables for Readability ---
 const styles = {
-  mainDiv: "mx-auto max-w-7xl px-8 py-6",
-  headerWrapper: "mb-4 flex items-center justify-between",
-  headerTitle: "font-display text-[17px] font-semibold tracking-[-0.2px] text-text-main",
-  headerSub: "mt-[3px] text-xs text-t2",
-  tableWrapper: "overflow-hidden rounded-[8px] border border-brd bg-s1",
-  table: "w-full border-collapse text-left",
-  trHead: "border-b border-brd bg-s2",
-  thBase: "px-4 py-[11px] text-[11px] font-medium tracking-[0.5px] uppercase text-t3",
-  trBody: "border-b border-brd transition-colors hover:bg-s2 last:border-0",
-  tdBase: "px-4 py-[14px] align-middle",
-  selectInput: "min-w-[132px] cursor-pointer appearance-none rounded-[5px] border bg-[url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%279%27 height=%275%27 viewBox=%270 0 9 5%27%3E%3Cpath d=%27M0 0l4.5 5L9 0z%27 fill=%27%23444%27/%3E%3C/svg%3E')] bg-[position:right_8px_center] bg-no-repeat px-[10px] py-[6px] pr-[28px] font-sans text-xs font-normal outline-none transition-all",
+  mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
+  headerWrapper: 'mb-[18px] flex flex-wrap items-center justify-between gap-[10px]',
+  headerTitle: 'font-display text-[17px] font-semibold tracking-[-0.2px] text-text-main',
+  headerSub: 'mt-[3px] text-xs text-t2',
+  tableWrapper: 'overflow-hidden rounded-[8px] border border-brd bg-s1',
+  table: 'w-full border-collapse text-left',
+  trHead: 'border-b border-brd bg-s2',
+  thBase: 'px-4 py-[11px] text-[11px] font-medium tracking-[0.5px] uppercase text-t3 whitespace-nowrap',
+  trBody: 'border-b border-brd transition-colors hover:bg-s2 last:border-0',
+  tdBase: 'px-4 py-[14px] align-middle',
+  selectInput: 'min-w-[132px] cursor-pointer appearance-none rounded-[5px] border bg-[url(\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%279%27 height=%275%27 viewBox=%270 0 9 5%27%3E%3Cpath d=%27M0 0l4.5 5L9 0z%27 fill=%27%23444%27/%3E%3C/svg%3E\')] bg-[position:right_8px_center] bg-no-repeat px-[10px] py-[6px] pr-[28px] font-sans text-xs font-normal outline-none transition-all',
   
   selectStatusColors: {
     'ns': 'bg-transparent text-t3 border-brd2',
     'ac': 'bg-adim text-amber-main border-amber-main/20',
     'dn': 'bg-gdim text-green-main border-green-main/20'
-  } as Record<string, string>,
+  },
   
-  problemWrapper: "flex items-center gap-[9px]",
-  problemIcon: "w-[26px] shrink-0 text-[16px] opacity-85",
-  problemName: "text-[14px] font-medium text-text-main",
-  problemConcepts: "mt-[3px] text-[12px] leading-[1.55] text-t2",
-  diffBadgeBase: "inline-flex items-center whitespace-nowrap rounded-[4px] border px-[9px] py-[3px] text-[11px] font-medium tracking-[0.2px]",
+  problemWrapper: 'flex items-center gap-[9px]',
+  problemIcon: 'w-[26px] shrink-0 text-[16px] opacity-85',
+  problemName: 'text-[14px] font-medium text-text-main',
+  problemConcepts: 'mt-[3px] text-[12px] leading-[1.55] text-t2',
   
-  // Dynamic Mappings
-  diffBadgeColors: {
-    'Beginner': 'border-green-main/15 bg-gdim text-green2',
-    'Intermediate': 'border-amber-main/15 bg-adim text-amber-main',
-    'Advanced': 'border-red-main/15 bg-rdim text-red-main',
-    'default': 'border-red-main/15 bg-rdim text-red-main'
-  } as Record<string, string>,
+  impBadgeBase: 'inline-flex items-center whitespace-nowrap rounded-[4px] border px-[9px] py-[3px] text-[11px] font-medium tracking-[0.2px]',
+  impBadgeColors: {
+    'critical': 'border-red-main/15 bg-rdim text-red-main',
+    'high': 'border-amber-main/15 bg-adim text-amber-main',
+    'medium': 'border-green-main/15 bg-gdim text-green2',
+    'low': 'border-brd2 bg-s3 text-t2',
+    'default': 'border-brd2 bg-s3 text-t2'
+  },
   
-  linksWrapper: "flex flex-wrap items-center gap-[5px]",
-  linkItem: "inline-flex items-center gap-1 whitespace-nowrap rounded-[4px] border border-blue-main/10 bg-bdim px-[9px] py-[4px] text-[11px] text-blue-main no-underline transition-all hover:border-blue-main/25 hover:bg-blue-main/10"
+  tagsWrapper: 'flex flex-wrap gap-[5px]',
+  coTag: 'whitespace-nowrap rounded-[4px] border border-brd2 bg-transparent px-[8px] py-[3px] text-[10px] text-t3',
+
+  linksWrapper: 'flex flex-wrap items-center gap-[5px]',
+  linkItem: 'inline-flex items-center gap-1 whitespace-nowrap rounded-[4px] border border-blue-main/12 bg-bdim px-[9px] py-[4px] text-[11px] text-blue-main no-underline transition-all hover:border-blue-main/25 hover:bg-blue-main/13'
 };
 
 interface LldTableProps {
@@ -45,18 +47,12 @@ interface LldTableProps {
 }
 
 export default function LldTable({ progressMap, updateProgress }: LldTableProps) {
-  const lldTopics = PRACTICE.filter(p => p.t === 'LLD');
-
   return (
     <div className={styles.mainDiv}>
       <div className={styles.headerWrapper}>
         <div>
-          <h2 className={styles.headerTitle}>
-            LLD Concepts & Practice
-          </h2>
-          <div className={styles.headerSub}>
-            Low-Level Design and Object-Oriented problems
-          </div>
+          <h2 className={styles.headerTitle}>Low Level Design</h2>
+          <div className={styles.headerSub}>OOP, design patterns, class modeling</div>
         </div>
       </div>
 
@@ -64,20 +60,38 @@ export default function LldTable({ progressMap, updateProgress }: LldTableProps)
         <table className={styles.table}>
           <thead>
             <tr className={styles.trHead}>
-              <th className={styles.thBase}>Status</th>
-              <th className={styles.thBase}>Problem</th>
-              <th className={styles.thBase}>Difficulty</th>
-              <th className={styles.thBase}>Links</th>
+              <th className={styles.thBase} style={{ width: '30px' }}>#</th>
+              <th className={styles.thBase} style={{ minWidth: '210px' }}>Topic</th>
+              <th className={styles.thBase}>Importance</th>
+              <th className={styles.thBase} style={{ minWidth: '130px' }}>Status</th>
+              <th className={styles.thBase}>Key Concepts</th>
+              <th className={styles.thBase} style={{ minWidth: '240px' }}>Best Resources</th>
             </tr>
           </thead>
           <tbody>
-            {lldTopics.map((item, idx) => {
-              const dynamicDiffBadge = styles.diffBadgeColors[item.diff] || styles.diffBadgeColors.default;
+            {LLD_TOPICS.map((item, idx) => {
+              const dynamicImpBadge = (styles.impBadgeColors as any)[item.imp] || styles.impBadgeColors.default;
               const statusVal = progressMap[item.id] || 'ns';
-              const dynamicSelectColor = styles.selectStatusColors[statusVal] || styles.selectStatusColors['ns'];
+              const dynamicSelectColor = (styles.selectStatusColors as any)[statusVal] || styles.selectStatusColors['ns'];
 
               return (
-                <tr key={idx} className={styles.trBody}>
+                <tr key={item.id} className={styles.trBody}>
+                  <td className={styles.tdBase}>
+                    <span className="text-[11px] text-t3 font-medium">{idx + 1}</span>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <div className={styles.problemWrapper}>
+                      <div className={styles.problemIcon}>{item.ico}</div>
+                      <div>
+                        <div className={styles.problemName}>{item.name}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className={styles.tdBase}>
+                    <span className={`${styles.impBadgeBase} ${dynamicImpBadge}`}>
+                      {item.imp}
+                    </span>
+                  </td>
                   <td className={styles.tdBase}>
                     <select 
                       className={`${styles.selectInput} ${dynamicSelectColor}`}
@@ -90,18 +104,7 @@ export default function LldTable({ progressMap, updateProgress }: LldTableProps)
                     </select>
                   </td>
                   <td className={styles.tdBase}>
-                    <div className={styles.problemWrapper}>
-                      <div className={styles.problemIcon}>{item.ico}</div>
-                      <div>
-                        <div className={styles.problemName}>{item.name}</div>
-                        <div className={styles.problemConcepts}>{item.concepts}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className={styles.tdBase}>
-                    <span className={`${styles.diffBadgeBase} ${dynamicDiffBadge}`}>
-                      {item.diff}
-                    </span>
+                    <div className={styles.problemConcepts}>{item.desc}</div>
                   </td>
                   <td className={styles.tdBase}>
                     <div className={styles.linksWrapper}>
