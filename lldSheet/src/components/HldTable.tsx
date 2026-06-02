@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HLD_TOPICS } from '../data/hld';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
   headerWrapper: 'mb-[18px] flex flex-wrap items-center justify-between gap-[10px]',
+  
+  fBar: 'flex flex-wrap items-center gap-[6px]',
+  fBtn: 'cursor-pointer rounded-[5px] border border-brd2 bg-transparent px-[13px] py-[6px] font-sans text-[12px] text-t2 transition-all hover:bg-s2 hover:text-text-main',
+  fBtnActive: '!border-green-main/30 !bg-gdim !text-green-main',
+  srch: 'w-[210px] rounded-[5px] border border-brd2 bg-s1 px-[12px] py-[6px] font-sans text-[13px] text-text-main outline-none transition-colors placeholder:text-t3 focus:border-green-main/30',
+
   headerTitle: 'font-display text-[17px] font-semibold tracking-[-0.2px] text-text-main',
   headerSub: 'mt-[3px] text-xs text-t2',
   tableWrapper: 'overflow-hidden rounded-[8px] border border-brd bg-s1',
@@ -47,12 +53,40 @@ interface HldTableProps {
 }
 
 export default function HldTable({ progressMap, updateProgress }: HldTableProps) {
+  const [search, setSearch] = useState('');
+  const [impF, setImpF] = useState('all');
+
+  const filteredTopics = HLD_TOPICS.filter(item => {
+    const searchLower = search.toLowerCase();
+    const matchSearch = item.name.toLowerCase().includes(searchLower) || item.desc.toLowerCase().includes(searchLower);
+    const matchImp = impF === 'all' || item.imp.toLowerCase() === impF;
+    return matchSearch && matchImp;
+  });
+
   return (
     <div className={styles.mainDiv}>
       <div className={styles.headerWrapper}>
         <div>
-          <h2 className={styles.headerTitle}>High Level Design</h2>
-          <div className={styles.headerSub}>Architecture, scalability, distributed systems</div>
+          <h2 className={styles.headerTitle}>High-Level Design (HLD)</h2>
+          <div className={styles.headerSub}>Systems, architectures, and concepts to scale to millions of users.</div>
+        </div>
+        <div className={styles.fBar}>
+          <input 
+            type="text" 
+            className={styles.srch} 
+            placeholder="🔍 Search..." 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {['all', 'critical', 'high', 'medium', 'low'].map(imp => (
+            <button
+              key={imp}
+              className={`${styles.fBtn} ${impF === imp ? styles.fBtnActive : ''}`}
+              onClick={() => setImpF(imp)}
+            >
+              {imp.charAt(0).toUpperCase() + imp.slice(1)}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -69,7 +103,7 @@ export default function HldTable({ progressMap, updateProgress }: HldTableProps)
             </tr>
           </thead>
           <tbody>
-            {HLD_TOPICS.map((item, idx) => {
+            {filteredTopics.map((item, idx) => {
               const dynamicImpBadge = (styles.impBadgeColors as any)[item.imp] || styles.impBadgeColors.default;
               const statusVal = progressMap[item.id] || 'ns';
               const dynamicSelectColor = (styles.selectStatusColors as any)[statusVal] || styles.selectStatusColors['ns'];
