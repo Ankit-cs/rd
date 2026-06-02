@@ -1,6 +1,6 @@
-# 🚀 NextGen System Architecture Tracker
+# 🌱 mySystemDesign: Beginner to Advanced Architecture Tracker
 
-> A modern, comprehensive, and interactive curriculum for mastering Software Architecture, High-Level Design (HLD), and Low-Level Design (LLD). Built from the ground up with Next.js 15, Tailwind CSS v4, and TypeScript.
+> A modern, comprehensive, and interactive curriculum for mastering Software Architecture, High-Level Design (HLD), Low-Level Design (LLD), and Design Patterns. Built from the ground up with Next.js 15, Tailwind CSS, and TypeScript.
 
 <div align="center">
 
@@ -17,9 +17,20 @@
 
 ## 📖 Overview
 
-System design interviews are notoriously difficult to prepare for due to the sheer volume of unstructured information scattered across the internet. **NextGen System Architecture Tracker** solves this by offering a heavily opinionated, highly structured curriculum that tracks your progress completely locally in your browser.
+System design interviews are notoriously difficult to prepare for due to the sheer volume of unstructured information scattered across the internet. **mySystemDesign** solves this by offering a heavily opinionated, highly structured curriculum that tracks your progress completely locally in your browser.
 
 Instead of getting lost in endless tutorials, follow our structured phases, check off topics as you learn them, and review real-world interview questions.
+
+---
+
+## 🚀 Key Features
+
+* **Dynamic Progress Tracking**: Automatically tracks your progress across all modules using dynamic statistic pills (Done, Active, Pending) and a persistent global progress bar.
+* **Persistent State**: Zero-dependency local persistence. Your progress (`sdt-p`) is saved securely in your browser's `localStorage`.
+* **Custom Resource Links**: Add your own custom resource links directly to any LLD, HLD, Patterns, or Practice topic using the interactive `+ Add` modal. Your custom links are saved permanently to `localStorage` (`sdt-l`).
+* **SEO Optimized**: Comprehensive OpenGraph tags, Twitter cards, and semantic HTML to ensure excellent search rankings.
+* **UX/UI**: Features a sleek dark mode, real-time search filtering, dynamic header statistic tracking, and micro-interactions.
+* **Data-Driven Architecture**: Cleanly extracts architectural concepts into scalable TypeScript data files for easy expansion.
 
 ---
 
@@ -71,13 +82,11 @@ A collection of high-frequency questions asked at top-tier tech companies.
 
 ---
 
-## 💻 Tech Stack & Features
+## 💻 Tech Stack
 
 * **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
 * **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 * **Language**: [TypeScript](https://www.typescriptlang.org/)
-* **State Management**: Zero-dependency local persistence. Your progress (`Done`, `Active`, `Pending`) is saved securely in your browser's `localStorage`.
-* **UX/UI**: Features a sleek dark mode, real-time search filtering, dynamic header statistic tracking, and micro-interactions.
 
 ---
 
@@ -85,12 +94,16 @@ A collection of high-frequency questions asked at top-tier tech companies.
 
 1. **Clone & Install Dependencies:**
    ```bash
+   cd lldsheet
    npm install
    ```
 
 2. **Boot the Development Server:**
    ```bash
-   npx next dev
+   npm run dev
    ```
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser. Your progress will be saved automatically as you interact with the UI.
+
+---
+*Created with Next.js, Tailwind CSS, and local persistence.*
