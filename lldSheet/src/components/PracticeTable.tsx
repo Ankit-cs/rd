@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PRACTICE } from '../data/pract';
+import { CustomLinkMap, ProgressMap } from '../utils/storage';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
@@ -51,11 +52,13 @@ const styles = {
 };
 
 interface PracticeTableProps {
-  progressMap: Record<string, string>;
-  updateProgress: (id: string, status: string) => void;
+  progressMap: ProgressMap;
+  updateProgress: (id: string, val: string) => void;
+  customLinks?: CustomLinkMap;
+  onAddLink?: (id: string) => void;
 }
 
-export default function PracticeTable({ progressMap, updateProgress }: PracticeTableProps) {
+export default function PracticeTable({ progressMap, updateProgress, customLinks = {}, onAddLink }: PracticeTableProps) {
   const [search, setSearch] = useState('');
   const [diffF, setDiffF] = useState('all');
   const [typeF, setTypeF] = useState('all');
@@ -165,7 +168,7 @@ export default function PracticeTable({ progressMap, updateProgress }: PracticeT
                     <div className={styles.linksWrapper}>
                       {item.links.map((lnk, lIdx) => (
                         <a
-                          key={lIdx}
+                          key={`default-${lIdx}`}
                           href={lnk.u}
                           target="_blank"
                           rel="noreferrer"
@@ -174,6 +177,25 @@ export default function PracticeTable({ progressMap, updateProgress }: PracticeT
                           {lnk.t}
                         </a>
                       ))}
+                      {(customLinks[item.id] || []).map((lnk, lIdx) => (
+                        <a
+                          key={`custom-${lIdx}`}
+                          href={lnk.u}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.linkItem}
+                        >
+                          {lnk.t}
+                        </a>
+                      ))}
+                      {onAddLink && (
+                        <button 
+                          className="ml-1 rounded-[4px] border border-brd2 bg-s3 px-[8px] py-[3px] text-[10px] font-medium text-t2 transition-colors hover:bg-s2 hover:text-text-main"
+                          onClick={() => onAddLink(item.id)}
+                        >
+                          + Add
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

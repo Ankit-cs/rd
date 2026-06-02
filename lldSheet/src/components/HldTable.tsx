@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { HLD_TOPICS } from '../data/hld';
+import { CustomLinkMap, ProgressMap } from '../utils/storage';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
@@ -48,11 +49,13 @@ const styles = {
 };
 
 interface HldTableProps {
-  progressMap: Record<string, string>;
-  updateProgress: (id: string, status: string) => void;
+  progressMap: ProgressMap;
+  updateProgress: (id: string, val: string) => void;
+  customLinks?: CustomLinkMap;
+  onAddLink?: (id: string) => void;
 }
 
-export default function HldTable({ progressMap, updateProgress }: HldTableProps) {
+export default function HldTable({ progressMap, updateProgress, customLinks = {}, onAddLink }: HldTableProps) {
   const [search, setSearch] = useState('');
   const [impF, setImpF] = useState('all');
 
@@ -149,7 +152,7 @@ export default function HldTable({ progressMap, updateProgress }: HldTableProps)
                     <div className={styles.linksWrapper}>
                       {item.links.map((lnk, lIdx) => (
                         <a
-                          key={lIdx}
+                          key={`default-${lIdx}`}
                           href={lnk.u}
                           target="_blank"
                           rel="noreferrer"
@@ -158,6 +161,25 @@ export default function HldTable({ progressMap, updateProgress }: HldTableProps)
                           {lnk.t}
                         </a>
                       ))}
+                      {(customLinks[item.id] || []).map((lnk, lIdx) => (
+                        <a
+                          key={`custom-${lIdx}`}
+                          href={lnk.u}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.linkItem}
+                        >
+                          {lnk.t}
+                        </a>
+                      ))}
+                      {onAddLink && (
+                        <button 
+                          className="ml-1 rounded-[4px] border border-brd2 bg-s3 px-[8px] py-[3px] text-[10px] font-medium text-t2 transition-colors hover:bg-s2 hover:text-text-main"
+                          onClick={() => onAddLink(item.id)}
+                        >
+                          + Add
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

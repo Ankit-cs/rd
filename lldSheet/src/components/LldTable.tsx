@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LLD_TOPICS } from '../data/lld';
+import { CustomLinkMap, ProgressMap } from '../utils/storage';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
@@ -48,11 +49,13 @@ const styles = {
 };
 
 interface LldTableProps {
-  progressMap: Record<string, string>;
-  updateProgress: (id: string, status: string) => void;
+  progressMap: ProgressMap;
+  updateProgress: (id: string, val: string) => void;
+  customLinks?: CustomLinkMap;
+  onAddLink?: (id: string) => void;
 }
 
-export default function LldTable({ progressMap, updateProgress }: LldTableProps) {
+export default function LldTable({ progressMap, updateProgress, customLinks = {}, onAddLink }: LldTableProps) {
   const [search, setSearch] = useState('');
   const [impF, setImpF] = useState('all');
 
@@ -142,17 +145,36 @@ export default function LldTable({ progressMap, updateProgress }: LldTableProps)
                   </td>
                   <td className={styles.tdBase}>
                     <div className={styles.linksWrapper}>
-                      {item.links.map((lnk, lIdx) => (
+                      {item.links.map((l, lIdx) => (
                         <a
-                          key={lIdx}
-                          href={lnk.u}
+                          key={`default-${lIdx}`}
+                          href={l.u}
                           target="_blank"
                           rel="noreferrer"
                           className={styles.linkItem}
                         >
-                          {lnk.t}
+                          {l.t}
                         </a>
                       ))}
+                      {(customLinks[item.id] || []).map((l, lIdx) => (
+                        <a
+                          key={`custom-${lIdx}`}
+                          href={l.u}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.linkItem}
+                        >
+                          {l.t}
+                        </a>
+                      ))}
+                      {onAddLink && (
+                        <button 
+                          className="ml-1 rounded-[4px] border border-brd2 bg-s3 px-[8px] py-[3px] text-[10px] font-medium text-t2 transition-colors hover:bg-s2 hover:text-text-main"
+                          onClick={() => onAddLink(item.id)}
+                        >
+                          + Add
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
