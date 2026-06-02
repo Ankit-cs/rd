@@ -42,6 +42,18 @@ export default function Header({ activeTab, setActiveTab }: { activeTab: string,
         >
           LLD Concepts
         </button>
+        <button
+          onClick={() => setActiveTab('hld')}
+          className={`${styles.tabBase} ${activeTab === 'hld' ? styles.tabState.active : styles.tabState.inactive}`}
+        >
+          HLD Concepts
+        </button>
+        <button
+          onClick={() => setActiveTab('patterns')}
+          className={`${styles.tabBase} ${activeTab === 'patterns' ? styles.tabState.active : styles.tabState.inactive}`}
+        >
+          Design Patterns
+        </button>
       </div>
     </div>
   );
