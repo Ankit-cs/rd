@@ -8,6 +8,7 @@ import HldTable from '../src/components/HldTable';
 import PatternsTable from '../src/components/PatternsTable';
 import PracticeTable from '../src/components/PracticeTable';
 import ResourcesTab from '../src/components/ResourcesTab';
+import QuestionsTab from '../src/components/QuestionsTab';
 import ProgressBar from '../src/components/ProgressBar';
 import { LLD_TOPICS } from '../src/data/lld';
 import { HLD_TOPICS } from '../src/data/hld';
@@ -86,6 +87,7 @@ export default function Home() {
           />
         )}
         {activeTab === 'resources' && <ResourcesTab />}
+        {activeTab === 'questions' && <QuestionsTab />}
       </main>
     </div>
   );
