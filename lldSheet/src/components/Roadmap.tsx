@@ -3,7 +3,7 @@ import { ROADMAP } from '../data/roadmap';
 
 // --- Tailwind Class Variables for Readability ---
 const styles = {
-  mainDiv: "flex flex-col gap-0 max-w-7xl mx-auto px-8 py-6",
+  mainDiv: "mx-auto flex max-w-[1600px] flex-col gap-0 px-[32px] py-[26px]",
   phaseCard: "mb-[14px] overflow-hidden rounded-[8px] border border-brd",
   phaseHeader: "flex cursor-pointer select-none items-center gap-[14px] bg-s2 px-5 py-4 transition-colors hover:bg-s3",
   phaseIcon: "text-[20px]",
