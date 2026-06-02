@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RESOURCES } from '../data/resources';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
   headerWrapper: 'mb-[18px] flex flex-wrap items-center justify-between gap-[10px]',
+  
+  fBar: 'flex flex-wrap items-center gap-[6px]',
+  fBtn: 'cursor-pointer rounded-[5px] border border-brd2 bg-transparent px-[13px] py-[6px] font-sans text-[12px] text-t2 transition-all hover:bg-s2 hover:text-text-main',
+  fBtnActive: '!border-green-main/30 !bg-gdim !text-green-main',
+  srch: 'w-[210px] rounded-[5px] border border-brd2 bg-s1 px-[12px] py-[6px] font-sans text-[13px] text-text-main outline-none transition-colors placeholder:text-t3 focus:border-green-main/30',
+
   headerTitle: 'font-display text-[17px] font-semibold tracking-[-0.2px] text-text-main',
   headerSub: 'mt-[3px] text-xs text-t2',
   
@@ -27,17 +33,45 @@ const styles = {
 };
 
 export default function ResourcesTab() {
+  const [search, setSearch] = useState('');
+  const [catF, setCatF] = useState('all');
+
+  const filteredResources = RESOURCES.filter(item => {
+    const searchLower = search.toLowerCase();
+    const matchSearch = item.title.toLowerCase().includes(searchLower) || item.desc.toLowerCase().includes(searchLower);
+    const matchCat = catF === 'all' || item.t.toLowerCase() === catF.toLowerCase();
+    return matchSearch && matchCat;
+  });
+
   return (
     <div className={styles.mainDiv}>
       <div className={styles.headerWrapper}>
         <div>
           <h2 className={styles.headerTitle}>Resource Library</h2>
-          <div className={styles.headerSub}>Best courses, books, YouTube channels, GitHub repos — all curated</div>
+          <div className={styles.headerSub}>Curated books, courses, blogs, and GitHub repositories</div>
+        </div>
+        <div className={styles.fBar}>
+          <input 
+            type="text" 
+            className={styles.srch} 
+            placeholder="🔍 Search..." 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {['all', 'Course', 'Video', 'Book', 'GitHub', 'Blog'].map(cat => (
+            <button
+              key={cat}
+              className={`${styles.fBtn} ${catF === cat ? styles.fBtnActive : ''}`}
+              onClick={() => setCatF(cat)}
+            >
+              {cat === 'all' ? 'All' : cat === 'Video' ? 'YouTube' : cat + (cat === 'GitHub' ? '' : 's')}
+            </button>
+          ))}
         </div>
       </div>
 
       <div className={styles.resGrid}>
-        {RESOURCES.map((item, idx) => (
+        {filteredResources.map((item, idx) => (
           <div key={idx} className={styles.resCard}>
             <div className={styles.rcTop}>
               <div className={styles.rcTitleWrapper}>
