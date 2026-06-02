@@ -66,6 +66,12 @@ export default function Header({ activeTab, setActiveTab }: { activeTab: string,
         >
           Resource Library
         </button>
+        <button
+          onClick={() => setActiveTab('questions')}
+          className={`${styles.tabBase} ${activeTab === 'questions' ? styles.tabState.active : styles.tabState.inactive}`}
+        >
+          Interview Questions
+        </button>
       </div>
     </div>
   );
