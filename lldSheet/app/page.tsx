@@ -16,6 +16,7 @@ import { LLD_TOPICS } from '../src/data/lld';
 import { HLD_TOPICS } from '../src/data/hld';
 import { PATTERNS } from '../src/data/patterns';
 import { PRACTICE } from '../src/data/pract';
+import { QUESTIONS } from '../src/data/questions';
 import { loadProgress, saveProgress, loadCustomLinks, saveCustomLinks, ProgressMap, CustomLinkMap } from '../src/utils/storage';
 import LinkModal from '../src/components/LinkModal';
 
@@ -54,7 +55,8 @@ export default function Home() {
     saveCustomLinks(newLinks);
   };
 
-  const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS, ...PRACTICE];
+  const questionTasks = QUESTIONS.map(q => ({ id: `q${q.id}` }));
+  const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS, ...PRACTICE, ...questionTasks];
   const totalTasks = allTasks.length;
   const doneTasks = allTasks.filter(p => progressMap[p.id] === 'dn').length;
   const activeTasks = allTasks.filter(p => progressMap[p.id] === 'ac').length;
@@ -105,7 +107,12 @@ export default function Home() {
           />
         )}
         {activeTab === 'resources' && <ResourcesTab />}
-        {activeTab === 'questions' && <QuestionsTab />}
+        {activeTab === 'questions' && (
+          <QuestionsTab 
+            progressMap={progressMap} 
+            updateProgress={updateProgress} 
+          />
+        )}
       </main>
       <Footer />
       <LinkModal 
