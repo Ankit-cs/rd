@@ -25,7 +25,7 @@ Instead of getting lost in endless tutorials, follow our structured phases, chec
 
 ## 🚀 Key Features
 
-* **Dynamic Progress Tracking**: Automatically tracks your progress across all modules using dynamic statistic pills (Done, Active, Pending) and a persistent global progress bar.
+* **Dynamic Progress Tracking**: Automatically tracks your progress across all modules—now fully integrated with the 88+ Interview Questions—using dynamic statistic pills (Done, Active, Pending) and a persistent global progress bar.
 * **Persistent State**: Zero-dependency local persistence. Your progress (`sdt-p`) is saved securely in your browser's `localStorage`.
 * **Custom Resource Links**: Add your own custom resource links directly to any LLD, HLD, Patterns, or Practice topic using the interactive `+ Add` modal. Your custom links are saved permanently to `localStorage` (`sdt-l`).
 * **SEO Optimized**: Comprehensive OpenGraph tags, Twitter cards, and semantic HTML to ensure excellent search rankings.
@@ -47,8 +47,8 @@ A step-by-step path ensuring you don't jump into advanced distributed systems be
 ### 2. ⚙️ Low-Level Design (LLD) & OOP
 Focuses on writing clean, maintainable, and scalable code using Object-Oriented principles.
 * **Core Systems:** Design a Parking Lot, Elevator System, Vending Machine, and ATM.
-* **Games:** Tic-Tac-Toe, Snake & Ladder, Chess.
-* **Complex Applications:** Splitwise (debt simplification algorithms), BookMyShow (concurrency and locking).
+* **Games:** Tic-Tac-Toe, Snake & Ladder, Chess, Online Card Games.
+* **Complex Applications:** Splitwise (debt simplification algorithms), BookMyShow, Kafka, Swiggy/Zomato, Ride Sharing (Uber), and In-Memory Data Streaming.
 
 ### 3. 🏗️ High-Level Design (HLD)
 Focuses on building large-scale, distributed fault-tolerant systems.
@@ -75,10 +75,11 @@ We’ve sifted through the noise to bring you the highest quality learning mater
 * **System Design Primers:** The famous GitHub repositories and standard community resources.
 * **Video Content:** Hand-picked YouTube channels dedicated to whiteboarding and architecture deep-dives.
 
-### 7. ❓ Real Interview Questions
-A collection of high-frequency questions asked at top-tier tech companies.
-* Includes dynamic difficulty ratings.
-* Features a toggleable "Hint/Approach" system to help you get unstuck without giving away the entire solution immediately.
+### 7. ❓ Real Interview Questions (88+ Problems)
+A comprehensive, fully migrated collection of high-frequency questions asked at top-tier tech companies.
+* Includes dynamic difficulty ratings, topics, and company tags.
+* Features an integrated **Status Tracker** (Not Started / Active / Done) seamlessly tied to your global progress.
+* Toggleable "Hint/Approach" system to help you get unstuck without giving away the entire solution immediately.
 
 ---
 
