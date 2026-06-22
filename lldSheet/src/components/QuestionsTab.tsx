@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { QUESTIONS } from '../data/questions';
+import { ProgressMap } from '../utils/storage';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
@@ -23,17 +24,30 @@ const styles = {
   fDot: 'h-[6px] w-[6px] rounded-full bg-s3',
   fDotOn: 'bg-green-main opacity-90',
   
-  qMeta: 'flex flex-wrap gap-[5px]',
+  qMeta: 'flex flex-wrap items-center justify-between gap-[5px] mt-[12px]',
+  qTags: 'flex flex-wrap gap-[5px]',
   qTagBase: 'rounded-[4px] px-[8px] py-[3px] text-[11px]',
   qtTopic: 'border border-green-main/15 bg-gdim text-green2',
-  qtCo: 'whitespace-nowrap border border-brd2 bg-s3 text-[12px] text-t2', // Using LLD company tag style for consistency
+  qtCo: 'whitespace-nowrap border border-brd2 bg-s3 text-[12px] text-t2',
   
   toggleBtn: 'mt-[12px] block cursor-pointer border-none bg-transparent p-0 font-sans text-[12px] leading-[1.55] text-t2 tracking-[-0.1px] outline-none transition-colors hover:text-green-main',
   
-  hintBox: 'mt-[10px] rounded-[5px] border-l-2 border-green-main/30 bg-bg3 px-[15px] py-[13px] text-[12px] leading-[1.8] text-t2'
+  hintBox: 'mt-[10px] rounded-[5px] border-l-2 border-green-main/30 bg-bg3 px-[15px] py-[13px] text-[12px] leading-[1.8] text-t2',
+
+  selectInput: 'min-w-[120px] cursor-pointer appearance-none rounded-[5px] border bg-[url(\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%279%27 height=%275%27 viewBox=%270 0 9 5%27%3E%3Cpath d=%27M0 0l4.5 5L9 0z%27 fill=%27%23444%27/%3E%3C/svg%3E\')] bg-[position:right_8px_center] bg-no-repeat px-[10px] py-[4px] pr-[28px] font-sans text-[11px] font-medium outline-none transition-all',
+  selectStatusColors: {
+    'ns': 'bg-transparent text-t3 border-brd2',
+    'ac': 'bg-adim text-amber-main border-amber-main/20',
+    'dn': 'bg-gdim text-green-main border-green-main/20'
+  }
 };
 
-export default function QuestionsTab() {
+interface QuestionsTabProps {
+  progressMap: ProgressMap;
+  updateProgress: (id: string, val: string) => void;
+}
+
+export default function QuestionsTab({ progressMap, updateProgress }: QuestionsTabProps) {
   const [openHints, setOpenHints] = useState<Record<number, boolean>>({});
   const [search, setSearch] = useState('');
   const [typeF, setTypeF] = useState('all');
@@ -80,47 +94,65 @@ export default function QuestionsTab() {
       </div>
 
       <div className={styles.qGrid}>
-        {filteredQuestions.map((q) => (
-          <div key={q.id} className={styles.qCard}>
-            <div className={styles.qCardTop}>
-              <div className={styles.qNum}>
-                #{q.id}
-                <div className={styles.fDotsWrapper}>
-                  {[1, 2, 3, 4, 5].map(num => (
-                    <div 
-                      key={num} 
-                      className={`${styles.fDot} ${num <= q.freq ? styles.fDotOn : ''}`}
-                    />
+        {filteredQuestions.map((q) => {
+          const statusId = `q${q.id}`;
+          const statusVal = progressMap[statusId] || 'ns';
+          const dynamicSelectColor = (styles.selectStatusColors as any)[statusVal] || styles.selectStatusColors['ns'];
+
+          return (
+            <div key={q.id} className={styles.qCard}>
+              <div className={styles.qCardTop}>
+                <div className={styles.qNum}>
+                  #{q.id}
+                  <div className={styles.fDotsWrapper}>
+                    {[1, 2, 3, 4, 5].map(num => (
+                      <div 
+                        key={num} 
+                        className={`${styles.fDot} ${num <= q.freq ? styles.fDotOn : ''}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.qText}>{q.q}</div>
+              </div>
+              
+              <div className={styles.qMeta}>
+                <div className={styles.qTags}>
+                  <span className={`${styles.qTagBase} ${styles.qtTopic}`}>{q.topic}</span>
+                  <span className={`${styles.qTagBase} border border-brd2 bg-s3 text-t2`}>{q.t}</span>
+                  {q.cos.map((co, idx) => (
+                    <span key={idx} className={`${styles.qTagBase} ${styles.qtCo}`}>
+                      {co}
+                    </span>
                   ))}
                 </div>
+                
+                <select 
+                  className={`${styles.selectInput} ${dynamicSelectColor}`}
+                  value={statusVal}
+                  onChange={(e) => updateProgress(statusId, e.target.value)}
+                >
+                  <option value="ns">Not Started</option>
+                  <option value="ac">Active</option>
+                  <option value="dn">Done</option>
+                </select>
               </div>
-              <div className={styles.qText}>{q.q}</div>
+              
+              <button 
+                className={styles.toggleBtn}
+                onClick={() => toggleHint(q.id)}
+              >
+                {openHints[q.id] ? 'Hide Approach' : 'View Approach'}
+              </button>
+              
+              {openHints[q.id] && (
+                <div className={styles.hintBox}>
+                  {q.hint}
+                </div>
+              )}
             </div>
-            
-            <div className={styles.qMeta}>
-              <span className={`${styles.qTagBase} ${styles.qtTopic}`}>{q.topic}</span>
-              <span className={`${styles.qTagBase} border border-brd2 bg-s3 text-t2`}>{q.t}</span>
-              {q.cos.map((co, idx) => (
-                <span key={idx} className={`${styles.qTagBase} ${styles.qtCo}`}>
-                  {co}
-                </span>
-              ))}
-            </div>
-            
-            <button 
-              className={styles.toggleBtn}
-              onClick={() => toggleHint(q.id)}
-            >
-              {openHints[q.id] ? 'Hide Approach' : 'View Approach'}
-            </button>
-            
-            {openHints[q.id] && (
-              <div className={styles.hintBox}>
-                {q.hint}
-              </div>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
