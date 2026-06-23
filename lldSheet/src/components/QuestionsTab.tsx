@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { QUESTIONS } from '../data/questions';
-import { ProgressMap } from '../utils/storage';
+import { ProgressMap, CustomLinkMap } from '../utils/storage';
 
 const styles = {
   mainDiv: 'mx-auto max-w-[1600px] px-[32px] py-[26px]',
@@ -34,6 +34,9 @@ const styles = {
   
   hintBox: 'mt-[10px] rounded-[5px] border-l-2 border-green-main/30 bg-bg3 px-[15px] py-[13px] text-[12px] leading-[1.8] text-t2',
 
+  addLinkBtn: 'ml-[8px] flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-[5px] border border-brd2 bg-bg2 text-t3 transition-colors hover:border-green-main/30 hover:text-green-main',
+  resourceLink: 'rounded-[4px] bg-bg3 px-[8px] py-[3px] text-[11px] text-green-main hover:bg-gdim hover:text-[#00e685] transition-colors',
+
   selectInput: 'min-w-[120px] cursor-pointer appearance-none rounded-[5px] border bg-[url(\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%279%27 height=%275%27 viewBox=%270 0 9 5%27%3E%3Cpath d=%27M0 0l4.5 5L9 0z%27 fill=%27%23444%27/%3E%3C/svg%3E\')] bg-[position:right_8px_center] bg-no-repeat px-[10px] py-[4px] pr-[28px] font-sans text-[11px] font-medium outline-none transition-all',
   selectStatusColors: {
     'ns': 'bg-transparent text-t3 border-brd2',
@@ -45,9 +48,11 @@ const styles = {
 interface QuestionsTabProps {
   progressMap: ProgressMap;
   updateProgress: (id: string, val: string) => void;
+  customLinks: CustomLinkMap;
+  onAddLink: (id: string) => void;
 }
 
-export default function QuestionsTab({ progressMap, updateProgress }: QuestionsTabProps) {
+export default function QuestionsTab({ progressMap, updateProgress, customLinks, onAddLink }: QuestionsTabProps) {
   const [openHints, setOpenHints] = useState<Record<number, boolean>>({});
   const [search, setSearch] = useState('');
   const [typeF, setTypeF] = useState('all');
@@ -136,7 +141,26 @@ export default function QuestionsTab({ progressMap, updateProgress }: QuestionsT
                   <option value="ac">Active</option>
                   <option value="dn">Done</option>
                 </select>
+                <button
+                  onClick={() => onAddLink(`q${q.id}`)}
+                  className={styles.addLinkBtn}
+                  title={customLinks[`q${q.id}`] ? 'Edit Link' : 'Add Link'}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                </button>
               </div>
+
+              {(customLinks[`q${q.id}`] || []).length > 0 && (
+                <div className="mt-[10px] flex flex-wrap gap-[6px]">
+                  {customLinks[`q${q.id}`].map((lnk, idx) => (
+                    <a key={idx} href={lnk.u} target="_blank" rel="noreferrer" className={styles.resourceLink}>
+                      {lnk.t} ↗
+                    </a>
+                  ))}
+                </div>
+              )}
               
               <button 
                 className={styles.toggleBtn}
