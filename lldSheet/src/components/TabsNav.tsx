@@ -60,6 +60,18 @@ export default function TabsNav({ activeTab, setActiveTab }: TabsNavProps) {
       >
         <span className={styles.tabIco}>❓</span> Interview Questions
       </div>
+      <div 
+        className={`${styles.tabBase} ${activeTab === 'behavioral' ? styles.tabState.active : styles.tabState.inactive}`} 
+        onClick={() => setActiveTab('behavioral')}
+      >
+        <span className={styles.tabIco}>🤝</span> Behavioral Questions
+      </div>
+      <div 
+        className={`${styles.tabBase} ${activeTab === 'engineering_blogs' ? styles.tabState.active : styles.tabState.inactive}`} 
+        onClick={() => setActiveTab('engineering_blogs')}
+      >
+        <span className={styles.tabIco}>💻</span> Engineering Blogs
+      </div>
     </nav>
   );
 }
