@@ -11,12 +11,15 @@ import PatternsTable from '../src/components/PatternsTable';
 import PracticeTable from '../src/components/PracticeTable';
 import ResourcesTab from '../src/components/ResourcesTab';
 import QuestionsTab from '../src/components/QuestionsTab';
+import BehavioralTab from '../src/components/BehavioralTab';
+import EngineeringBlogsTab from '../src/components/EngineeringBlogsTab';
 import ProgressBar from '../src/components/ProgressBar';
 import { LLD_TOPICS } from '../src/data/lld';
 import { HLD_TOPICS } from '../src/data/hld';
 import { PATTERNS } from '../src/data/patterns';
 import { PRACTICE } from '../src/data/pract';
 import { QUESTIONS } from '../src/data/questions';
+import { BEHAVIORAL_QUESTIONS } from '../src/data/behavioral';
 import { loadProgress, saveProgress, loadCustomLinks, saveCustomLinks, ProgressMap, CustomLinkMap } from '../src/utils/storage';
 import LinkModal from '../src/components/LinkModal';
 
@@ -56,7 +59,8 @@ export default function Home() {
   };
 
   const questionTasks = QUESTIONS.map(q => ({ id: `q${q.id}` }));
-  const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS, ...PRACTICE, ...questionTasks];
+  const behavioralTasks = BEHAVIORAL_QUESTIONS.map(q => ({ id: `bq-${q.id}` }));
+  const allTasks = [...LLD_TOPICS, ...HLD_TOPICS, ...PATTERNS, ...PRACTICE, ...questionTasks, ...behavioralTasks];
   const totalTasks = allTasks.length;
   const doneTasks = allTasks.filter(p => progressMap[p.id] === 'dn').length;
   const activeTasks = allTasks.filter(p => progressMap[p.id] === 'ac').length;
@@ -111,7 +115,18 @@ export default function Home() {
           <QuestionsTab 
             progressMap={progressMap} 
             updateProgress={updateProgress} 
+            customLinks={customLinks}
+            onAddLink={openLinkModal}
           />
+        )}
+        {activeTab === 'behavioral' && (
+          <BehavioralTab 
+            progressMap={progressMap} 
+            updateProgress={updateProgress} 
+          />
+        )}
+        {activeTab === 'engineering_blogs' && (
+          <EngineeringBlogsTab />
         )}
       </main>
       <Footer />
@@ -123,3 +138,4 @@ export default function Home() {
     </div>
   );
 }
+
