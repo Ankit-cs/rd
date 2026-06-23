@@ -39,6 +39,11 @@ export default function ResourcesTab() {
   const filteredResources = RESOURCES.filter(item => {
     const searchLower = search.toLowerCase();
     const matchSearch = item.title.toLowerCase().includes(searchLower) || item.desc.toLowerCase().includes(searchLower);
+    
+    if (catF === 'AI') {
+      return matchSearch && item.tags.includes('AI');
+    }
+    
     const matchCat = catF === 'all' || item.t.toLowerCase() === catF.toLowerCase();
     return matchSearch && matchCat;
   });
@@ -58,13 +63,13 @@ export default function ResourcesTab() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {['all', 'Course', 'Video', 'Book', 'GitHub', 'Blog'].map(cat => (
+          {['all', 'Course', 'Video', 'Book', 'GitHub', 'Blog', 'AI'].map(cat => (
             <button
               key={cat}
               className={`${styles.fBtn} ${catF === cat ? styles.fBtnActive : ''}`}
               onClick={() => setCatF(cat)}
             >
-              {cat === 'all' ? 'All' : cat === 'Video' ? 'YouTube' : cat + (cat === 'GitHub' ? '' : 's')}
+              {cat === 'all' ? 'All' : cat === 'Video' ? 'YouTube' : cat === 'AI' ? 'AI/ML' : cat + (cat === 'GitHub' ? '' : 's')}
             </button>
           ))}
         </div>
