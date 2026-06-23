@@ -213,5 +213,15 @@ export const RESOURCES = [
    author:"codeKarle", free:true,
    desc:"System design tutorials covering architecture of major internet companies.",
    tags:["HLD","Intermediate"],
-   url:"https://www.youtube.com/channel/UCZEfiXy7PmtVTezYUvc4zZw"}
+   url:"https://www.youtube.com/channel/UCZEfiXy7PmtVTezYUvc4zZw"},
+  {t:"Course", ico:"🎓", title:"Master Behavioral Interviews",
+   author:"Algomaster", free:false,
+   desc:"Learn how to crack the behavioral round using the STAR method and common patterns.",
+   tags:["Behavioral","All Levels"],
+   url:"https://algomaster.io/learn/behavioral/what-are-behavioral-interviews"},
+  {t:"Blog", ico:"✍️", title:"Amazon Leadership Principles",
+   author:"Amazon", free:true,
+   desc:"The official Amazon Leadership Principles. A must-read for any Amazon interview.",
+   tags:["Behavioral","All Levels"],
+   url:"https://www.amazon.jobs/content/en/our-workplace/leadership-principles"}
 ];
