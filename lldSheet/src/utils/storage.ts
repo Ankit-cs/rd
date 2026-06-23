@@ -1,5 +1,6 @@
 export type ProgressMap = Record<string, string>;
 export type CustomLinkMap = Record<string, { t: string, u: string }[]>;
+export type CustomAnswersMap = Record<string, string>;
 
 export function loadProgress(): ProgressMap {
   try {
@@ -34,5 +35,23 @@ export function saveCustomLinks(map: CustomLinkMap) {
     localStorage.setItem('sdt-l', JSON.stringify(map));
   } catch (e) {
     console.error('Failed to save custom links', e);
+  }
+}
+
+export function loadCustomAnswers(): CustomAnswersMap {
+  try {
+    const s = localStorage.getItem('sdt-a');
+    if (s) return JSON.parse(s);
+  } catch (e) {
+    console.error('Failed to load custom answers', e);
+  }
+  return {};
+}
+
+export function saveCustomAnswers(map: CustomAnswersMap) {
+  try {
+    localStorage.setItem('sdt-a', JSON.stringify(map));
+  } catch (e) {
+    console.error('Failed to save custom answers', e);
   }
 }
